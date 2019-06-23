@@ -14,19 +14,31 @@ Player.prototype.move = function (direction) {
 	switch (direction) {
 		case "right":
 			squareX = Math.floor((this.posX + SQUARE_SIZE) / 40);
-			if (this.canMove(squareX, squareY)) this.posX = this.posX += SPEED;
+			if (this.canMove(squareX, squareY)) {
+				this.collectDiamonds(squareX, squareY);
+				this.posX = this.posX += SPEED;
+			}
 			break;
 		case "left":
 			squareX = Math.ceil((this.posX - SQUARE_SIZE) / 40);
-			if (this.canMove(squareX, squareY)) this.posX = this.posX -= SPEED;
+			if (this.canMove(squareX, squareY)) {
+				this.posX = this.posX -= SPEED;
+				this.collectDiamonds(squareX, squareY);
+			}
 			break;
 		case "up":
 			squareY = Math.ceil((this.posY - SQUARE_SIZE) / 40);
-			if (this.canMove(squareX, squareY)) this.posY = this.posY -= SPEED;
+			if (this.canMove(squareX, squareY)) {
+				this.posY = this.posY -= SPEED;
+				this.collectDiamonds(squareX, squareY);
+			}
 			break;
 		case "down":
 			squareY = Math.floor((this.posY + SQUARE_SIZE) / 40);
-			if (this.canMove(squareX, squareY)) this.posY = this.posY += SPEED;
+			if (this.canMove(squareX, squareY)) {
+				this.posY = this.posY += SPEED;
+				this.collectDiamonds(squareX, squareY);
+			}
 			break;
 		default:
 			break;
