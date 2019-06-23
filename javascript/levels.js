@@ -12,9 +12,19 @@ const levelChars = {
 	".": "wall",
 	" ": "empty",
 	"d": "drop",
-	"b": "BadMan",
+	"b": "badMan",
 };
 
+class Location {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	read() {
+		return [x, y];
+	}
+}
 class Level {
 	constructor(plan) {
 		let rows = plan.pattern.trim().split("\n").map(el => [...el]);
@@ -25,12 +35,13 @@ class Level {
 		this.active = true;
 		this.badGuys = [];
 
+		console.log('constructing');
+
 		this.rows = rows.map((row, x) => {
 			return row.map((char, y) => {
 				let type = levelChars[char];
-				if ([".", " ", "d"].includes(type)) return type;
-				if (type == "b") this.badGuys.push(type.create(x, y));
-				return "empty";
+				if (type === "badMan") this.badGuys.push(new BadMan(x * SQUARE_SIZE, y * SQUARE_SIZE, rows));
+				return type;
 			});
 		});
 	}

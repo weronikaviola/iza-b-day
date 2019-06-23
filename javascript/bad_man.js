@@ -1,77 +1,85 @@
 class BadMan {
-	constructor(posX, posY) {
+	constructor(posX, posY, map) {
 		this.posX = posX;
 		this.posY = posY;
 		this.currentDirection = GenerateRandomDirection();
 		this.moving = false;
-
-		this.startMoving();
+		this.rowMap = map;
 	}
 
 	get type() { return "player"; }
 
-	static create(x, y) {
-		return new BadMan(x * SQUARE_SIZE, y * SQUARE_SIZE);
+	static create(x, y, rows) {
+		return new BadMan(x * SQUARE_SIZE, y * SQUARE_SIZE, rows);
 	}
 }
 
-BadMan.prototype.startMoving = function () {
-	this.moving = setInterval(this.move(this.currentDirection), 1000);
-
-}
-
-BadMan.prototype.move = function (direction) {
+BadMan.prototype.move = function () {
 	let squareX = Math.round(this.posX / 40);
 	let squareY = Math.round(this.posY / 40);
-	console.log(this);
-	switch (direction) {
+	switch (this.currentDirection) {
 		case "right":
-			squareX = Math.floor((this.posX + SQUARE_SIZE) / 40);
-			if (this.canMove(squareX, squareY)) {
-				STATE.currentGame.canvas.cx.clearRect(this.posX, this.posY, SQUARE_SIZE, SQUARE_SIZE);
+			if (this.canMove("right")) {
 				this.posX = this.posX += SPEED;
-				STATE.currentGame.canvas.drawBadMan(this.posX, this.posY, SQUARE_SIZE, SQUARE_SIZE);
 			} else {
-				this.currentDirection = "left";
+				this.chooseOtherDirection();
 			}
 			break;
 		case "left":
-			squareX = Math.ceil((this.posX - SQUARE_SIZE) / 40);
-			if (this.canMove(squareX, squareY)) {
-				STATE.currentGame.canvas.cx.clearRect(this.posX, this.posY, SQUARE_SIZE, SQUARE_SIZE);
+			if (this.canMove("left")) {
 				this.posX = this.posX -= SPEED;
-				STATE.currentGame.canvas.drawBadMan(this.posX, this.posY, SQUARE_SIZE, SQUARE_SIZE);
 			} else {
-				this.currentDirection = "right";
+				this.chooseOtherDirection();
 			}
 			break;
 		case "up":
-			squareY = Math.ceil((this.posY - SQUARE_SIZE) / 40);
-			if (this.canMove(squareX, squareY)) {
-				STATE.currentGame.canvas.cx.clearRect(this.posX, this.posY, SQUARE_SIZE, SQUARE_SIZE);
+			if (this.canMove("up")) {
 				this.posY = this.posY -= SPEED;
-				STATE.currentGame.canvas.drawBadMan(this.posX, this.posY, SQUARE_SIZE, SQUARE_SIZE);
 			} else {
-				this.currentDirection = "down";
+				this.chooseOtherDirection();
 			}
 			break;
 		case "down":
-			squareY = Math.floor((this.posY + SQUARE_SIZE) / 40);
-			if (this.canMove(squareX, squareY)) {
-				STATE.currentGame.canvas.cx.clearRect(this.posX, this.posY, SQUARE_SIZE, SQUARE_SIZE);
+			if (this.canMove("down")) {
 				this.posY = this.posY += SPEED;
-				STATE.currentGame.canvas.drawBadMan(this.posX, this.posY, SQUARE_SIZE, SQUARE_SIZE);
 			} else {
-				this.currentDirection = "up";
+				this.chooseOtherDirection();
 			}
 			break;
-
 		default:
 			break;
 	}
 }
 
-BadMan.prototype.canMove = function (squarex, squarey) {
-	// return (STATE.currentGame.level.rows[squarey][squarex] !== "wall");
-	return false;
+BadMan.prototype.canMove = function (direction) {
+	let squareX = Math.round(this.posX / 40);
+	let squareY = Math.round(this.posY / 40);
+	switch (direction) {
+		case "down":
+			squareY = Math.floor((this.posY + SQUARE_SIZE) / 40);
+			break;
+		case "up":
+			squareY = Math.ceil((this.posY - SQUARE_SIZE) / 40);
+			break;
+		case "left":
+			squareX = Math.ceil((this.posX - SQUARE_SIZE) / 40);
+			break;
+		case "right":
+			squareX = Math.floor((this.posX + SQUARE_SIZE) / 40);
+			break;
+		default:
+			break;
+	}
+
+	return !(this.isWall(squareX, squareY));
+}
+BadMan.prototype.isWall = function (squarex, squarey) {
+	return (this.rowMap[squarey][squarex] === ".");
+}
+
+BadMan.prototype.chooseOtherDirection = function () {
+	let possible = Object.values(DIRECTIONS).filter(dir => dir !== this.currentDirection);
+	possible = ShuffleArray(possible);
+	let newDirection = possible.find(dir => this.canMove(dir));
+	this.currentDirection = newDirection;
 }
