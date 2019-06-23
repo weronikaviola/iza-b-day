@@ -4,7 +4,7 @@ class State {
 		this.playerName = playerName;
 		this.totalPoints = 0;
 		this.currentGame = {};
-		this.currentLevel = "";
+		this.currentLevelIdx = 0;
 
 		this.initializeGame();
 	}
@@ -24,11 +24,11 @@ class State {
 
 State.prototype.initializeGame = function () {
 	//print welcome message....
-	this.initializeLevel(AVAILABLE_LEVELS[0]);
-}
-State.prototype.initializeLevel = function (level) {
-	this.currentLevel = level;
 	this.started = true;
+	this.initializeLevel(AVAILABLE_LEVELS[this.currentLevelIdx]);
+}
+
+State.prototype.initializeLevel = function (level) {
 	const body = document.getElementById("body");
 	this.currentGame.level = new Level(levels[level]);
 	this.currentGame.canvas = new CanvasDisplay(body, this.currentGame.level);
@@ -40,4 +40,18 @@ State.prototype.initializeLevel = function (level) {
 
 State.prototype.changeScore = function (points) {
 	this.totalPoints += points;
+}
+
+State.prototype.nextLevel = function (points) {
+	this.currentLevelIdx += 1;
+	this.changeScore(points);
+	if (this.currentLevelIdx < AVAILABLE_LEVELS.length) {
+		this.initializeGame(AVAILABLE_LEVELS(this.currentLevelIdx));
+	} else {
+		this.endGame();
+	}
+}
+
+State.prototype.endGame = function () {
+	console.log('done', this.points);
 }
