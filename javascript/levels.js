@@ -1,10 +1,14 @@
+const AVAILABLE_LEVELS = ["level1"]
+
 const levels = {
-	level1: "..........\n.        .\n. .... . .\n.    . . .\n. .. . . .\n.    . . .\n. .. .   .\n. .. ... .\n.        .\n..........",
+	level1:
+		"..........\n.  d  d  .\n. .... . .\n.    . . .\n. ..d. . .\n.    . . .\n. .. .   .\n. .. ... .\n.       d.\n..........",
 };
 
 const levelChars = {
 	".": "wall",
 	" ": "empty",
+	"d": "drop",
 };
 
 class Level {
@@ -13,6 +17,7 @@ class Level {
 		this.height = rows.length;
 		this.width = rows[0].length;
 		this.startActors = [];
+		this.score = 0;
 
 		this.rows = rows.map((row, x) => {
 			return row.map((char, y) => {
@@ -26,4 +31,9 @@ class Level {
 			});
 		});
 	}
+}
+
+Level.prototype.adjustPoints = function (num) {
+	this.score += num;
+	return this.score;
 }
