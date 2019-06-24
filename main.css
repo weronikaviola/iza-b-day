@@ -1,14 +1,69 @@
+
+/* start game styling */
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	border: 1px solid gray;
+	font-family: 'Press Start 2P', cursive;
 }
 main {
 	width: 80vw;
 	margin: 20px auto;
 
 }
-canvas {
-	border: 1px solid gray;
+/* end game styling */
+
+#container {
+	background-image: url(images/stylingImages/viola2.png);
 }
+
+
+canvas {
+	border: 1px solid grey;
+}
+
+#header {
+	height: 16vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 1vh;
+	color: red;
+	text-shadow: 4px 4px black;
+	/* background-image: url("images/stylingImages/background2.png"); */
+	
+}
+
+
+#body {
+	display:flex;
+	background-color:rgb(255, 255, 255);
+	justify-content: center;
+	align-items: center;
+	border: 1px solid blue;
+}
+
+#body-score {
+	display:flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+#player-name {
+	margin-bottom: 6vh;
+	font-size: 20px;
+}
+
+#player-score {
+	font-size: 25px;
+}
+#name-score {
+	display:flex;
+	flex-direction: column;
+	color: red;
+	text-shadow: 1px 1px white;
+	background: rgb(0, 0, 0, 0.85);
+	height:30vh;
+}
+
