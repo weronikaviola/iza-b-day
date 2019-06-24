@@ -50,7 +50,9 @@ Player.prototype.canMove = function (squarex, squarey) {
 }
 
 Player.prototype.collectDiamonds = function (squarex, squarey) {
-	if (STATE.currentGame.level.rows[squarey][squarex] === "drop") {
+	let index = STATE.currentGame.level.water.findIndex(l => (l.x == squarex && l.y == squarey));
+	if (index >= 0) {
+		STATE.currentGame.level.water.splice(index, 1);
 		STATE.currentGame.level.adjustPoints(1);
 	}
 }

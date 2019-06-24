@@ -22,7 +22,10 @@ class Location {
 	}
 
 	read() {
-		return [x, y];
+		return {
+			x: this.x * SQUARE_SIZE,
+			y: this.y * SQUARE_SIZE,
+		};
 	}
 }
 class Level {
@@ -34,13 +37,15 @@ class Level {
 		this.maxPoints = plan.maxPoints;
 		this.active = true;
 		this.badGuys = [];
+		this.water = [];
 
 		console.log('constructing');
 
-		this.rows = rows.map((row, x) => {
-			return row.map((char, y) => {
+		this.rows = rows.map((row, y) => {
+			return row.map((char, x) => {
 				let type = levelChars[char];
 				if (type === "badMan") this.badGuys.push(new BadMan(x * SQUARE_SIZE, y * SQUARE_SIZE, rows));
+				if (type === "drop") this.water.push(new Location(x, y));
 				return type;
 			});
 		});
@@ -56,5 +61,6 @@ Level.prototype.adjustPoints = function (num) {
 }
 
 Level.prototype.checkIfDone = function () {
-	return (this.maxPoints === this.score);
+	console.log(this.water);
+	return (this.water.length <= 0);
 }

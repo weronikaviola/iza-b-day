@@ -48,11 +48,20 @@ State.prototype.displayBadGuys = function () {
       this.currentGame.canvas.cx.clearRect(guy.posX, guy.posY, SQUARE_SIZE, SQUARE_SIZE);
       guy.move();
       this.currentGame.canvas.drawBadMan(guy);
+      this.eatWater(guy);
     }, 500);
     this.currentIntervals.push(interval);
   });
 }
 
+State.prototype.eatWater = function (man) {
+  let index = this.currentGame.level.water.findIndex(l => (l.read().x == man.posX && l.read().y == man.posY));
+  if (index >= 0) {
+    this.currentGame.level.water.splice(index, 1);
+    console.log(this.currentGame.level.water);
+    this.currentGame.level.adjustPoints(0);
+  }
+}
 
 State.prototype.changeScore = function (points) {
   this.totalPoints += points;
