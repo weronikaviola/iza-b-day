@@ -2,7 +2,7 @@ const AVAILABLE_LEVELS = ["level1"]
 
 const levels = {
 	level1: {
-		pattern: "..........\n.  d  d  .\n. .... . .\n.    . . .\n. ..d. . .\n.    . . .\n. .. .   .\n. .. ... .\n.       d.\n..........",
+		pattern: "..........\n.  d  d  .\n. .... . .\n.  b . . .\n. ..d. . .\n.    . . .\n. .. .   .\n. .. ... .\n.       d.\n..........",
 		maxPoints: 4,
 	}
 
@@ -12,27 +12,41 @@ const levelChars = {
 	".": "wall",
 	" ": "empty",
 	"d": "drop",
+	"b": "badMan",
 };
 
+class Location {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	read() {
+		return {
+			x: this.x * SQUARE_SIZE,
+			y: this.y * SQUARE_SIZE,
+		};
+	}
+}
 class Level {
 	constructor(plan) {
 		let rows = plan.pattern.trim().split("\n").map(el => [...el]);
 		this.height = rows.length;
 		this.width = rows[0].length;
-		this.startActors = [];
 		this.score = 0;
 		this.maxPoints = plan.maxPoints;
 		this.active = true;
+		this.badGuys = [];
+		this.water = [];
 
-		this.rows = rows.map((row, x) => {
-			return row.map((char, y) => {
+		console.log('constructing');
+
+		this.rows = rows.map((row, y) => {
+			return row.map((char, x) => {
 				let type = levelChars[char];
-				if (typeof type == "string") return type;
-				// for moving "actors" create new classes
-				this.startActors.push(
-					type.create(x, y, ch)
-				);
-				return "empty";
+				if (type === "badMan") this.badGuys.push(new BadMan(x * SQUARE_SIZE, y * SQUARE_SIZE, rows));
+				if (type === "drop") this.water.push(new Location(x, y));
+				return type;
 			});
 		});
 	}
@@ -47,5 +61,6 @@ Level.prototype.adjustPoints = function (num) {
 }
 
 Level.prototype.checkIfDone = function () {
-	return (this.maxPoints === this.score);
+	console.log(this.water);
+	return (this.water.length <= 0);
 }

@@ -6,3 +6,12 @@ const DIRECTIONS = {
   39: "right",
   40: "down",
 };
+
+function GenerateRandomDirection() {
+  let randomNo = Math.floor(Math.random() * 4) + 37;
+  return DIRECTIONS[randomNo];
+}
+
+function ShuffleArray(arr) {
+  return arr.sort(() => 0.5 - Math.random());
+}
