@@ -13,13 +13,13 @@ class CanvasDisplay {
 	}
 }
 
-CanvasDisplay.prototype.clearDisplay = function (status) {
+CanvasDisplay.prototype.clearDisplay = function (status = undefined) {
 	if (status == "won") {
 		this.cx.fillStyle = "rgb(68,191,255)";
 	} else if (status == "lost") {
 		this.cx.fillStyle = "rgb(44,136,214)";
 	} else {
-		this.cx.fillStyle = "rgb(52,166,251)";
+		this.cx.fillStyle = "rgb(255,255,255)";
 	}
 
 	this.cx.fillRect(0, 0, this.canvas.width, this.canvas.height);

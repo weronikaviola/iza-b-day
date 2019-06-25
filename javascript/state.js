@@ -27,18 +27,27 @@ State.prototype.initializeGame = function () {
   //print welcome message....
   this.started = true;
   this.initializeLevel(AVAILABLE_LEVELS[this.currentLevelIdx]);
+
+
 }
 
-State.prototype.initializeLevel = function (level) {
+State.prototype.initializeLevel = async function (level) {
   const body = document.getElementById("body");
   this.currentGame.level = new Level(levels[level]);
   this.currentGame.badGuys = this.currentGame.level.badGuys;
   this.currentGame.canvas = new CanvasDisplay(body, this.currentGame.level);
-  this.currentGame.canvas.drawBackground(this.currentGame.level);
-  this.currentGame.player = new Player(200, 320, 1);
-  this.currentGame.canvas.drawPlayer(this.currentGame.player);
-  this.displayBadGuys();
-  document.addEventListener("keydown", this.movePlayer);
+  console.log(this.currentGame.canvas);
+  this.currentGame.canvas.cx.font = "30px Arial";
+  this.currentGame.canvas.cx.fillText("hello", 10, 50);
+  setTimeout(() => {
+    this.currentGame.canvas.clearDisplay();
+    this.currentGame.canvas.drawBackground(this.currentGame.level);
+    this.currentGame.player = new Player(200, 320, 1);
+    this.currentGame.canvas.drawPlayer(this.currentGame.player);
+    this.displayBadGuys();
+    document.addEventListener("keydown", this.movePlayer);
+  }, 1000);
+
 }
 
 State.prototype.displayBadGuys = function () {
