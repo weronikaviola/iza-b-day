@@ -6,6 +6,7 @@ const DIRECTIONS = {
   39: "right",
   40: "down",
 };
+END_TEXT = "Thank you for playing. \nThis is the end."
 
 function GenerateRandomDirection() {
   let randomNo = Math.floor(Math.random() * 4) + 37;
