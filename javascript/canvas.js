@@ -25,6 +25,18 @@ CanvasDisplay.prototype.clearDisplay = function (status = undefined) {
 	this.cx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 }
 
+
+CanvasDisplay.prototype.printText = function (message) {
+	this.clearDisplay("won");
+	this.cx.font = "25px Monospace";
+	this.cx.fillStyle = "red";
+	let text = message.split("\n");
+	text.forEach((line, idx) => {
+		this.cx.fillText(line, 10, (idx + 1) * 50);
+	});
+}
+
+
 //displays
 
 const wallsImg = document.createElement("img");

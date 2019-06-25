@@ -5,7 +5,7 @@ class State {
     this.totalPoints = 0;
     this.currentGame = {};
     this.currentLevelIdx = 0;
-    this.currentIntervals = [];
+    this.currentIntervals = {};
 
     this.initializeGame();
   }
@@ -36,30 +36,29 @@ State.prototype.initializeLevel = async function (level) {
   this.currentGame.level = new Level(levels[level]);
   this.currentGame.badGuys = this.currentGame.level.badGuys;
   this.currentGame.canvas = new CanvasDisplay(body, this.currentGame.level);
-  console.log(this.currentGame.canvas);
-  this.currentGame.canvas.cx.font = "30px Arial";
-  this.currentGame.canvas.cx.fillText("hello", 10, 50);
+
+  this.currentGame.canvas.printText(levels[level].startText);
+
   setTimeout(() => {
     this.currentGame.canvas.clearDisplay();
     this.currentGame.canvas.drawBackground(this.currentGame.level);
     this.currentGame.player = new Player(200, 320, 1);
     this.currentGame.canvas.drawPlayer(this.currentGame.player);
     this.displayBadGuys();
-    document.addEventListener("keydown", this.movePlayer);
-  }, 1000);
+    document.addEventListener("keydown", function (evt) { that.movePlayer(evt) });
+  }, 3000);
 
 }
 
 State.prototype.displayBadGuys = function () {
-  this.currentGame.badGuys.forEach(guy => {
+  this.currentGame.badGuys.forEach((guy, idx) => {
     this.currentGame.canvas.drawBadMan(guy);
-    let interval = setInterval(() => {
+    this.currentIntervals[idx] = setInterval(() => {
       this.currentGame.canvas.cx.clearRect(guy.posX, guy.posY, SQUARE_SIZE, SQUARE_SIZE);
       guy.move();
       this.currentGame.canvas.drawBadMan(guy);
       this.eatWater(guy);
     }, 500);
-    this.currentIntervals.push(interval);
   });
 }
 
@@ -78,9 +77,9 @@ State.prototype.changeScore = function (points) {
 
 State.prototype.nextLevel = function (points) {
   this.currentLevelIdx += 1;
-  this.currentIntervals = [];
   this.changeScore(points);
   if (this.currentLevelIdx < AVAILABLE_LEVELS.length) {
+    this.currentIntervals = {};
     this.initializeGame(AVAILABLE_LEVELS(this.currentLevelIdx));
   } else {
     this.endGame();
@@ -88,5 +87,8 @@ State.prototype.nextLevel = function (points) {
 }
 
 State.prototype.endGame = function () {
-  console.log('done', this.points);
+  Object.values(this.currentIntervals).forEach(interval => {
+    clearInterval(interval);
+  })
+  this.currentGame.canvas.printText(END_TEXT);
 }
