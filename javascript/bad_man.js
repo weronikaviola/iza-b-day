@@ -2,70 +2,108 @@ class BadMan {
 	constructor(posX, posY, map) {
 		this.posX = posX;
 		this.posY = posY;
-		this.currentDirection = GenerateRandomDirection();
 		this.moving = false;
 		this.rowMap = map;
 	}
 
-	get type() { return "player"; }
+	get type() { return "BadMan"; }
 
 	static create(x, y, rows) {
 		return new BadMan(x * SQUARE_SIZE, y * SQUARE_SIZE, rows);
 	}
 }
 
-BadMan.prototype.move = function () {
-	let squareX = Math.round(this.posX / 40);
-	let squareY = Math.round(this.posY / 40);
-	switch (this.currentDirection) {
-		case "right":
-			if (this.canMove("right")) {
-				this.posX = this.posX += SPEED;
-			} else {
-				this.chooseOtherDirection();
+BadMan.prototype.findBestMove = function (water, posX, posY, moves) {
+	if (water.findIndex(l => (l.read().x == posX && l.read().y == posY)) >= 0) {
+		// found the water, return the best moves
+		return (moves);
+	} else if (moves.length > 20) {
+		// leave the recurrencion if it is deeper then 20
+		// this is a hack since we should ensure there are no cycles
+		// but this would require a bit more logic and maybe better data structures
+		return (moves);
+	} else {
+		// make sure we do not go back
+		let lastDirection = moves[moves.length - 1];
+		let distance = 9999999;
+		let bestMoves = []
+		if (lastDirection != "left" && this.canMove(posX, posY, "right")) {
+			newMoves = moves.slice(0);
+			newMoves.push("right");
+			let newBestMoves = this.findBestMove(water, posX + SPEED, posY, newMoves);
+			let newDistance = newBestMoves.length
+			if (newDistance < distance) {
+				distance = newDistance
+				bestMoves = newBestMoves
 			}
-			break;
-		case "left":
-			if (this.canMove("left")) {
-				this.posX = this.posX -= SPEED;
-			} else {
-				this.chooseOtherDirection();
+		}
+		if (lastDirection != "right" && this.canMove(posX, posY, "left")) {
+			newMoves = moves.slice(0);
+			newMoves.push("left");
+			let newBestMoves = this.findBestMove(water, posX - SPEED, posY, newMoves);
+			let newDistance = newBestMoves.length
+			if (newDistance < distance) {
+				distance = newDistance
+				bestMoves = newBestMoves
 			}
-			break;
-		case "up":
-			if (this.canMove("up")) {
-				this.posY = this.posY -= SPEED;
-			} else {
-				this.chooseOtherDirection();
+		}
+		if (lastDirection != "down" && this.canMove(posX, posY, "up")) {
+			newMoves = moves.slice(0);
+			newMoves.push("up");
+			let newBestMoves = this.findBestMove(water, posX, posY - SPEED, newMoves);
+			let newDistance = newBestMoves.length
+			if (newDistance < distance) {
+				distance = newDistance
+				bestMoves = newBestMoves
 			}
-			break;
-		case "down":
-			if (this.canMove("down")) {
-				this.posY = this.posY += SPEED;
-			} else {
-				this.chooseOtherDirection();
+		}
+		if (lastDirection != "up" && this.canMove(posX, posY, "down")) {
+			newMoves = moves.slice(0);
+			newMoves.push("down");
+			let newBestMoves = this.findBestMove(water, posX, posY + SPEED, newMoves);
+			let newDistance = newBestMoves.length
+			if (newDistance < distance) {
+				distance = newDistance
+				bestMoves = newBestMoves
 			}
-			break;
-		default:
-			break;
+		}
+		let result = [].concat(moves, bestMoves)
+		return (result)
 	}
 }
 
-BadMan.prototype.canMove = function (direction) {
-	let squareX = Math.round(this.posX / 40);
-	let squareY = Math.round(this.posY / 40);
+BadMan.prototype.move = function (player) {
+	let bestMoves = this.findBestMove(player, this.posX, this.posY, []);
+	let direction = bestMoves[0]
+
+	if (direction == "right") {
+		this.posX = this.posX += SPEED;
+	} else if (direction == "left") {
+		this.posX = this.posX -= SPEED;
+	} else if (direction == "up") {
+		this.posY = this.posY -= SPEED;
+	} else if (direction == "down") {
+		this.posY = this.posY += SPEED;
+	} else {
+		// do nothing
+	}
+}
+
+BadMan.prototype.canMove = function (posX, posY, direction) {
+	let squareX = Math.round(posX / 40);
+	let squareY = Math.round(posY / 40);
 	switch (direction) {
 		case "down":
-			squareY = Math.floor((this.posY + SQUARE_SIZE) / 40);
+			squareY = Math.floor((posY + SQUARE_SIZE) / 40);
 			break;
 		case "up":
-			squareY = Math.ceil((this.posY - SQUARE_SIZE) / 40);
+			squareY = Math.ceil((posY - SQUARE_SIZE) / 40);
 			break;
 		case "left":
-			squareX = Math.ceil((this.posX - SQUARE_SIZE) / 40);
+			squareX = Math.ceil((posX - SQUARE_SIZE) / 40);
 			break;
 		case "right":
-			squareX = Math.floor((this.posX + SQUARE_SIZE) / 40);
+			squareX = Math.floor((posX + SQUARE_SIZE) / 40);
 			break;
 		default:
 			break;
@@ -75,11 +113,4 @@ BadMan.prototype.canMove = function (direction) {
 }
 BadMan.prototype.isWall = function (squarex, squarey) {
 	return (this.rowMap[squarey][squarex] === ".");
-}
-
-BadMan.prototype.chooseOtherDirection = function () {
-	let possible = Object.values(DIRECTIONS).filter(dir => dir !== this.currentDirection);
-	possible = ShuffleArray(possible);
-	let newDirection = possible.find(dir => this.canMove(dir));
-	this.currentDirection = newDirection;
 }

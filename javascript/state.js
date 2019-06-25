@@ -56,7 +56,7 @@ State.prototype.displayBadGuys = function () {
     this.currentGame.canvas.drawBadMan(guy);
     this.currentIntervals[idx] = setInterval(() => {
       this.currentGame.canvas.cx.clearRect(guy.posX, guy.posY, SQUARE_SIZE, SQUARE_SIZE);
-      guy.move();
+      guy.move(this.currentGame.level.water);
       this.currentGame.canvas.drawBadMan(guy);
       this.eatWater(guy);
     }, 500);
