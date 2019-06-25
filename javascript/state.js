@@ -14,12 +14,13 @@ class State {
     return new State(name);
   }
 
-  movePlayer = (evt) => {
+  movePlayer(evt) {
     let currentX = this.currentGame.player.posX;
     let currentY = this.currentGame.player.posY;
     this.currentGame.canvas.cx.clearRect(currentX, currentY, SQUARE_SIZE, SQUARE_SIZE);
     this.currentGame.player.move(DIRECTIONS[evt.keyCode]);
     this.currentGame.canvas.drawPlayer(this.currentGame.player);
+    return true;
   }
 }
 
@@ -38,7 +39,8 @@ State.prototype.initializeLevel = function (level) {
   this.currentGame.player = new Player(200, 320, 1);
   this.currentGame.canvas.drawPlayer(this.currentGame.player);
   this.displayBadGuys();
-  document.addEventListener("keydown", this.movePlayer);
+  let that = this;
+  document.addEventListener("keydown",function(evt) {that.movePlayer(evt)});
 }
 
 State.prototype.displayBadGuys = function () {
