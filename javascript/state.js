@@ -46,6 +46,7 @@ State.prototype.initializeLevel = async function (level) {
     this.currentGame.player = new Player(200, 320, 1);
     this.currentGame.canvas.drawPlayer(this.currentGame.player);
     this.displayBadGuys();
+    let that = this;
     document.addEventListener("keydown", function (evt) { that.movePlayer(evt) });
   }, 3000);
 }
