@@ -1,3 +1,5 @@
+
+
 class State {
   constructor(playerName) {
     this.started = false;
@@ -33,7 +35,7 @@ State.prototype.initializeGame = function () {
 }
 
 State.prototype.initializeLevel = async function (level) {
-  const body = document.getElementById("body");
+  const body = document.getElementById("maze");
   this.currentGame.level = new Level(levels[level]);
   this.currentGame.badGuys = this.currentGame.level.badGuys;
   this.currentGame.canvas = new CanvasDisplay(body, this.currentGame.level);
@@ -43,7 +45,7 @@ State.prototype.initializeLevel = async function (level) {
   setTimeout(() => {
     this.currentGame.canvas.clearDisplay();
     this.currentGame.canvas.drawBackground(this.currentGame.level);
-    this.currentGame.player = new Player(200, 320, 1);
+    this.currentGame.player = new Player(5*SQUARE_SIZE, 8*SQUARE_SIZE, 1);
     this.currentGame.canvas.drawPlayer(this.currentGame.player);
     this.displayBadGuys();
     let that = this;

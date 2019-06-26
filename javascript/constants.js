@@ -1,12 +1,19 @@
-const SQUARE_SIZE = 40;
-const SPEED = 40;
+var w = window,
+  d = document,
+  e = d.documentElement,
+  g = d.getElementsByTagName('body')[0],
+  x = w.innerWidth || e.clientWidth || g.clientWidth,
+  y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+let SQUARE_SIZE = Math.floor((y - 200) / 10);
+SPEED = SQUARE_SIZE;
 const DIRECTIONS = {
   37: "left",
   38: "up",
   39: "right",
   40: "down",
 };
-END_TEXT = "Thank you for playing. \nThis is the end."
+END_TEXT = "GAME OVER"
 
 function GenerateRandomDirection() {
   let randomNo = Math.floor(Math.random() * 4) + 37;

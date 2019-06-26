@@ -9,32 +9,32 @@ class Player {
 }
 
 Player.prototype.move = function (direction) {
-	let squareX = Math.ceil(this.posX / 40);
-	let squareY = Math.ceil(this.posY / 40);
+	let squareX = Math.ceil(this.posX / SQUARE_SIZE);
+	let squareY = Math.ceil(this.posY / SQUARE_SIZE);
 	switch (direction) {
 		case "right":
-			squareX = Math.floor((this.posX + SQUARE_SIZE) / 40);
+			squareX = Math.floor((this.posX + SQUARE_SIZE) / SQUARE_SIZE);
 			if (this.canMove(squareX, squareY)) {
 				this.collectDiamonds(squareX, squareY);
 				this.posX = this.posX += SPEED;
 			}
 			break;
 		case "left":
-			squareX = Math.ceil((this.posX - SQUARE_SIZE) / 40);
+			squareX = Math.ceil((this.posX - SQUARE_SIZE) / SQUARE_SIZE);
 			if (this.canMove(squareX, squareY)) {
 				this.posX = this.posX -= SPEED;
 				this.collectDiamonds(squareX, squareY);
 			}
 			break;
 		case "up":
-			squareY = Math.ceil((this.posY - SQUARE_SIZE) / 40);
+			squareY = Math.ceil((this.posY - SQUARE_SIZE) / SQUARE_SIZE);
 			if (this.canMove(squareX, squareY)) {
 				this.posY = this.posY -= SPEED;
 				this.collectDiamonds(squareX, squareY);
 			}
 			break;
 		case "down":
-			squareY = Math.floor((this.posY + SQUARE_SIZE) / 40);
+			squareY = Math.floor((this.posY + SQUARE_SIZE) / SQUARE_SIZE);
 			if (this.canMove(squareX, squareY)) {
 				this.posY = this.posY += SPEED;
 				this.collectDiamonds(squareX, squareY);

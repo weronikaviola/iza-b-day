@@ -90,20 +90,20 @@ BadMan.prototype.move = function (player) {
 }
 
 BadMan.prototype.canMove = function (posX, posY, direction) {
-	let squareX = Math.round(posX / 40);
-	let squareY = Math.round(posY / 40);
+	let squareX = Math.round(posX / SQUARE_SIZE);
+	let squareY = Math.round(posY / SQUARE_SIZE);
 	switch (direction) {
 		case "down":
-			squareY = Math.floor((posY + SQUARE_SIZE) / 40);
+			squareY = Math.floor((posY + SQUARE_SIZE) / SQUARE_SIZE);
 			break;
 		case "up":
-			squareY = Math.ceil((posY - SQUARE_SIZE) / 40);
+			squareY = Math.ceil((posY - SQUARE_SIZE) / SQUARE_SIZE);
 			break;
 		case "left":
-			squareX = Math.ceil((posX - SQUARE_SIZE) / 40);
+			squareX = Math.ceil((posX - SQUARE_SIZE) / SQUARE_SIZE);
 			break;
 		case "right":
-			squareX = Math.floor((posX + SQUARE_SIZE) / 40);
+			squareX = Math.floor((posX + SQUARE_SIZE) / SQUARE_SIZE);
 			break;
 		default:
 			break;
