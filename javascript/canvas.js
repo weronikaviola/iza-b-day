@@ -43,7 +43,7 @@ const wallsImg = document.createElement("img");
 wallsImg.src = "images/tile-test.jpg";
 
 const playerImg = document.createElement("img");
-playerImg.src = "images/peach.png";
+playerImg.src = "images/Unbenannt.png";
 
 const dropImg = document.createElement("img");
 dropImg.src = "images/drop.png";
@@ -70,7 +70,6 @@ CanvasDisplay.prototype.drawBackground = function (level) {
 }
 
 CanvasDisplay.prototype.drawPlayer = function (player) {
-	//here animate player
 	this.cx.drawImage(playerImg, player.posX, player.posY, SQUARE_SIZE, SQUARE_SIZE);
 }
 

@@ -25,7 +25,6 @@ class State {
 }
 
 State.prototype.initializeGame = function () {
-  //print welcome message....
   this.started = true;
   this.initializeLevel(AVAILABLE_LEVELS[this.currentLevelIdx]);
 
