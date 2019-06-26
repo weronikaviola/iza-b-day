@@ -20,12 +20,10 @@ CanvasDisplay.prototype.clearDisplay = function (status = undefined) {
 		this.cx.fillStyle = "#000000";
 		// this.cx.fillStyle = "rgb(44,136,214)";
 	} else {
-		this.cx.fillStyle = "rgb(255,255,255)";
+		this.cx.fillStyle = "#ffffff";
 	}
-
 	this.cx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 }
-
 
 CanvasDisplay.prototype.printText = function (message) {
 	this.clearDisplay("won");
@@ -37,6 +35,13 @@ CanvasDisplay.prototype.printText = function (message) {
 	});
 }
 
+CanvasDisplay.prototype.printGameOver = function () {
+	this.clearDisplay("won");
+	this.cx.font = "50px Verdana";
+	this.cx.fillStyle = "#ffff00";
+	this.cx.textAlign = "center";
+	this.cx.fillText("GAME OVER", this.canvas.width / 2, this.canvas.height / 2);
+}
 
 //displays
 

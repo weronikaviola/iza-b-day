@@ -30,8 +30,6 @@ State.prototype.initializeGame = function () {
   //print welcome message....
   this.started = true;
   this.initializeLevel(AVAILABLE_LEVELS[this.currentLevelIdx]);
-
-
 }
 
 State.prototype.initializeLevel = async function (level) {
@@ -45,7 +43,7 @@ State.prototype.initializeLevel = async function (level) {
   setTimeout(() => {
     this.currentGame.canvas.clearDisplay();
     this.currentGame.canvas.drawBackground(this.currentGame.level);
-    this.currentGame.player = new Player(5*SQUARE_SIZE, 8*SQUARE_SIZE, 1);
+    this.currentGame.player = new Player(5 * SQUARE_SIZE, 8 * SQUARE_SIZE, 1);
     this.currentGame.canvas.drawPlayer(this.currentGame.player);
     this.displayBadGuys();
     let that = this;
@@ -93,5 +91,5 @@ State.prototype.endGame = function () {
   Object.values(this.currentIntervals).forEach(interval => {
     clearInterval(interval);
   })
-  this.currentGame.canvas.printText(END_TEXT);
+  this.currentGame.canvas.printGameOver();
 }
