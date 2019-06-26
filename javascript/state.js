@@ -35,7 +35,7 @@ State.prototype.initializeLevel = async function (level) {
   const body = document.getElementById("maze");
   this.currentGame.level = new Level(levels[level]);
   this.currentGame.badGuys = this.currentGame.level.badGuys;
-  this.currentGame.canvas = new CanvasDisplay(body, this.currentGame.level);
+  this.currentGame.canvas = new CanvasDisplay(this.body, this.currentGame.level);
 
   this.currentGame.canvas.printText(levels[level].startText);
 
@@ -75,20 +75,28 @@ State.prototype.changeScore = function (points) {
   this.totalPoints += points;
 }
 
+State.prototype.clearBadGuysIntervals = function () {
+  Object.values(this.currentIntervals).forEach(interval => {
+    clearInterval(interval);
+  });
+}
+
 State.prototype.nextLevel = function (points) {
   this.currentLevelIdx += 1;
   this.changeScore(points);
+  console.log(this.currentLevelIdx);
+  console.log(AVAILABLE_LEVELS.length);
   if (this.currentLevelIdx < AVAILABLE_LEVELS.length) {
-    this.currentIntervals = {};
-    this.initializeGame(AVAILABLE_LEVELS(this.currentLevelIdx));
+    //we start indexing levels at 0
+    this.clearBadGuysIntervals();
+    this.currentGame.canvas.removeCanvas(this.body);
+    this.initializeGame(AVAILABLE_LEVELS[this.currentLevelIdx]);
   } else {
     this.endGame();
   }
 }
 
 State.prototype.endGame = function () {
-  Object.values(this.currentIntervals).forEach(interval => {
-    clearInterval(interval);
-  })
-  this.currentGame.canvas.printGameOver();
+  this.clearBadGuysIntervals();
+  this.currentGame.canvas.printText(END_TEXT);
 }

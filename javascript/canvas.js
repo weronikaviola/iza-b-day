@@ -43,6 +43,11 @@ CanvasDisplay.prototype.printGameOver = function () {
 	this.cx.fillText("GAME OVER", this.canvas.width / 2, this.canvas.height / 2);
 }
 
+CanvasDisplay.prototype.removeCanvas = function (parent) {
+	parent.removeChild(this.canvas);
+}
+
+
 //displays
 
 const wallsImg = document.createElement("img");
