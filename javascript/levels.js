@@ -1,4 +1,4 @@
-const AVAILABLE_LEVELS = ["level1", "level2", "level3"]
+const AVAILABLE_LEVELS = ["level1", "level2", "level3", "level4"]
 
 const levels = {
 	level1: {
@@ -15,7 +15,12 @@ const levels = {
 		pattern: "....................\n..      ..     .....\n.   . ...   .  .p  .\n. ...  .   .   ... .\n. d  .    .        .\n. .   ....   ddddd .\n. ... ....   dddd  .\n. . . .  .   ddd   .\n.     .  .   dd    .\n....................",
 		maxPoints: 15,
 		startText: "something about horse",
-	}
+	},
+	level4: {
+		pattern: "....................\n.  .   b .      .  .\n. ...    bd     d ..\n. .............dd...\n.  .............dd..\n. .............dd  .\n. ...   d       .  .\n.  .   .    d    . .\n.   p . .   b  d   .\n....................",
+		maxPoints: 11,
+		startText: "mloda is now helping the bad companies\nCan you go through this trap that she prepared for you?",
+	},
 };
 
 const levelChars = {
