@@ -52,10 +52,15 @@ class Level {
 
 		console.log('constructing');
 
+		// let's start predefined number of BadGuys in the same position
+		// they should move in different direction since they have different IQ
+		this.badGuys.push(new BadMan(1 * SQUARE_SIZE, 1 * SQUARE_SIZE, rows, 0));
+		this.badGuys.push(new BadMan(1 * SQUARE_SIZE, 1 * SQUARE_SIZE, rows, 1));
+		this.badGuys.push(new BadMan(1 * SQUARE_SIZE, 1 * SQUARE_SIZE, rows, 2));
+
 		this.rows = rows.map((row, y) => {
 			return row.map((char, x) => {
 				let type = levelChars[char];
-				if (type === "badMan") this.badGuys.push(new BadMan(x * SQUARE_SIZE, y * SQUARE_SIZE, rows));
 				if (type === "drop") this.water.push(new Location(x, y));
 				if (type === "player") {
 					this.playerX = x;

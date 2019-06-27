@@ -59,9 +59,6 @@ playerImg.src = "images/Unbenannt.png";
 const dropImg = document.createElement("img");
 dropImg.src = "images/water.png";
 
-const badMan1Img = document.createElement("img");
-badMan1Img.src = "images/nestle80x80.png";
-
 CanvasDisplay.prototype.drawBackground = function (level) {
 	for (let y = 0; y < level.height; y++) {
 		for (let x = 0; x < level.width; x++) {
@@ -85,5 +82,7 @@ CanvasDisplay.prototype.drawPlayer = function (player) {
 }
 
 CanvasDisplay.prototype.drawBadMan = function (badMan) {
-	this.cx.drawImage(badMan1Img, badMan.posX, badMan.posY, SQUARE_SIZE, SQUARE_SIZE)
+	const badManImg = document.createElement("img");
+	badManImg.src = badMan.icon();
+	this.cx.drawImage(badManImg, badMan.posX, badMan.posY, SQUARE_SIZE, SQUARE_SIZE)
 }
