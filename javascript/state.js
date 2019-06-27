@@ -54,12 +54,25 @@ State.prototype.initializeLevel = async function (level) {
 State.prototype.displayBadGuys = function () {
   this.currentGame.badGuys.forEach((guy, idx) => {
     this.currentGame.canvas.drawBadMan(guy);
+    let moves = [];
+    let forbiddenMove = null;
     this.currentIntervals[idx] = setInterval(() => {
       this.currentGame.canvas.cx.clearRect(guy.posX, guy.posY, SQUARE_SIZE, SQUARE_SIZE);
-      guy.move(this.currentGame.level.water);
+      moves.push(guy.move(this.currentGame.level.water, forbiddenMove));
+      forbiddenMove = null;
+      // find shirt cycle left-right-left, right-left-right, up-down-up, down-up-down
+      if (moves.length == 3) {
+        if (moves[0] == moves[2]) {
+          if ((moves[0]=="left" && moves[1]=="right") || (moves[0]=="right" && moves[1]=="left") || (moves[0]=="down" && moves[1]=="up") || (moves[0]=="up" && moves[1]=="down")) {
+            forbiddenMove = moves[2]
+            console.log(forbiddenMove + " AA " + moves )
+          }
+        }
+        moves = [];
+      }
       this.currentGame.canvas.drawBadMan(guy);
       this.eatWater(guy);
-    }, 500);
+    }, guy.speed());
   });
 }
 
