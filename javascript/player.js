@@ -53,5 +53,6 @@ Player.prototype.collectDiamonds = function (squarex, squarey) {
 	if (index >= 0) {
 		STATE.currentGame.level.water.splice(index, 1);
 		STATE.currentGame.level.adjustPoints(1);
+		STATE.updateScore(STATE.currentGame.level.score);
 	}
 }

@@ -1,4 +1,4 @@
-const AVAILABLE_LEVELS = ["level1", "level2"]
+const AVAILABLE_LEVELS = ["level1", "level2", "level3"]
 
 const levels = {
 	level1: {
@@ -10,6 +10,11 @@ const levels = {
 		pattern: "....................\n.  d  b          d .\n. ....... .   .b.  .\n. . d. d.  .d.  . d.\n. . ... . b .   .d .\n.  d  d      .    d.\n. ....... .. .   . .\n. ddbd    .. ..d. ..\n. .......p   ddd   .\n....................",
 		maxPoints: 17,
 		startText: "something about music?",
+	},
+	level3: {
+		pattern: "....................\n..      ..     .....\n.   . ...   .  .p  .\n. ...  .   .   ... .\n. d  .    .        .\n. .   ....   ddddd .\n. ... ....   dddd  .\n. . . .  .   ddd   .\n.     .  .   dd    .\n....................",
+		maxPoints: 15,
+		startText: "something about horse",
 	}
 };
 
@@ -35,11 +40,11 @@ class Location {
 	}
 }
 class Level {
-	constructor(plan) {
+	constructor(plan, startPoints = 0) {
 		let rows = plan.pattern.trim().split("\n").map(el => [...el]);
 		this.height = rows.length;
 		this.width = rows[0].length;
-		this.score = 0;
+		this.score = startPoints;
 		this.maxPoints = plan.maxPoints;
 		this.active = true;
 		this.badGuys = [];

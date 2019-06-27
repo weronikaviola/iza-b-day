@@ -8,6 +8,8 @@ class State {
     this.currentGame = {};
     this.currentLevelIdx = 0;
     this.currentIntervals = {};
+    this.scoreBoard = document.getElementById("player-score");
+    this.levelBoard = document.getElementById("level");
 
     this.initializeGame();
   }
@@ -33,7 +35,8 @@ State.prototype.initializeGame = function () {
 
 State.prototype.initializeLevel = async function (level) {
   this.body = document.getElementById("maze");
-  this.currentGame.level = new Level(levels[level]);
+  this.levelBoard.innerText = `${this.currentLevelIdx + 1}`;
+  this.currentGame.level = new Level(levels[level], this.totalPoints);
   this.currentGame.badGuys = this.currentGame.level.badGuys;
   this.currentGame.canvas = new CanvasDisplay(this.body, this.currentGame.level);
 
@@ -79,18 +82,21 @@ State.prototype.changeScore = function (points) {
 }
 
 State.prototype.clearBadGuysIntervals = function () {
+  console.log(this.currentIntervals);
   Object.values(this.currentIntervals).forEach(interval => {
     clearInterval(interval);
+    console.log(this.currentIntervals);
   });
 }
 
-State.prototype.nextLevel = function (points) {
+State.prototype.nextLevel = function () {
   this.currentLevelIdx += 1;
-  this.changeScore(points);
+  let points = this.currentGame.level.score;
+  this.totalPoints = points;
   document.removeEventListener("keydown", this.listenForMoves);
+  this.clearBadGuysIntervals();
   if (this.currentLevelIdx < AVAILABLE_LEVELS.length) {
     //we start indexing levels at 0
-    this.clearBadGuysIntervals();
     this.currentGame.canvas.removeCanvas(this.body);
     this.initializeGame(AVAILABLE_LEVELS[this.currentLevelIdx]);
   } else {
@@ -101,4 +107,8 @@ State.prototype.nextLevel = function (points) {
 State.prototype.endGame = function () {
   this.clearBadGuysIntervals();
   this.currentGame.canvas.printText(END_TEXT);
+}
+
+State.prototype.updateScore = function (newScore) {
+  this.scoreBoard.innerText = newScore;
 }
