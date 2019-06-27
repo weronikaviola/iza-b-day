@@ -124,16 +124,16 @@ BadMan.prototype.move = function (water) {
 		return
 	}
 	let direction = moves[1][0]
-	if (this.id == 2) {
-		console.log("###########")
-		console.log("Current location: ", this.posX / SQUARE_SIZE, this.posY / SQUARE_SIZE)
-		console.log("Move to ", direction)
-		console.log("BestMoves", moves)
-		water.forEach(function (item, index) {
-			console.log("Water: ", item.read().x / SQUARE_SIZE, item.read().y / SQUARE_SIZE);
-		});
-		console.log("###########")
-	}
+	// if (this.id == 2) {
+	// 	console.log("###########")
+	// 	console.log("Current location: ", this.posX / SQUARE_SIZE, this.posY / SQUARE_SIZE)
+	// 	console.log("Move to ", direction)
+	// 	console.log("BestMoves", moves)
+	// 	water.forEach(function (item, index) {
+	// 		console.log("Water: ", item.read().x / SQUARE_SIZE, item.read().y / SQUARE_SIZE);
+	// 	});
+	// 	console.log("###########")
+	// }
 
 	if (direction == "right") {
 		this.posX = this.posX += SPEED;
