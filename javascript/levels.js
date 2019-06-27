@@ -1,12 +1,7 @@
-const AVAILABLE_LEVELS = ["level1", "level2"]
+const AVAILABLE_LEVELS = ["level1"]
 
 const levels = {
 	level1: {
-		pattern: "..........\n.  d  d  .\n. ....b. .\n.  b . . .\n. ..d. . .\n.    . . .\n. .. .   .\n. .. ... .\n.       d.\n..........",
-		maxPoints: 4,
-		startText: "Welcome to the game.\nYou must collect \nall the water supplies \nbefore the evil companies \nwill do that. \nReady?"
-	},
-	level2: {
 		pattern: "....................\n.  ddd d d      d  .\n. ....d.b.... . ....\n.    . .b.... .d.. .\n. .. . .    d . .. .\n.   b. . .... . .. .\n. .. . . dd   . d  .\n. .. .d... .. . d...\n.                  .\n....................",
 		maxPoints: 4,
 		startText: "Welcome to the game.\nYou must collect \nall the water supplies \nbefore the evil companies \nwill do that. \nReady?"

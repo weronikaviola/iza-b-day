@@ -32,7 +32,7 @@ State.prototype.initializeGame = function () {
 }
 
 State.prototype.initializeLevel = async function (level) {
-  const body = document.getElementById("maze");
+  this.body = document.getElementById("maze");
   this.currentGame.level = new Level(levels[level]);
   this.currentGame.badGuys = this.currentGame.level.badGuys;
   this.currentGame.canvas = new CanvasDisplay(this.body, this.currentGame.level);
@@ -84,8 +84,6 @@ State.prototype.clearBadGuysIntervals = function () {
 State.prototype.nextLevel = function (points) {
   this.currentLevelIdx += 1;
   this.changeScore(points);
-  console.log(this.currentLevelIdx);
-  console.log(AVAILABLE_LEVELS.length);
   if (this.currentLevelIdx < AVAILABLE_LEVELS.length) {
     //we start indexing levels at 0
     this.clearBadGuysIntervals();
