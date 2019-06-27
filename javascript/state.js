@@ -5,11 +5,13 @@ class State {
     this.started = false;
     this.playerName = playerName;
     this.totalPoints = 0;
+    this.lives = 7;
     this.currentGame = {};
     this.currentLevelIdx = 0;
     this.currentIntervals = {};
     this.scoreBoard = document.getElementById("player-score");
     this.levelBoard = document.getElementById("level");
+    this.liveBoard = document.getElementById("lives");
 
     this.initializeGame();
   }
@@ -64,6 +66,7 @@ State.prototype.displayBadGuys = function () {
       guy.move(this.currentGame.level.water);
       this.currentGame.canvas.drawBadMan(guy);
       this.eatWater(guy);
+      this.killPlayer(guy);
     }, guy.speed());
   });
 }
@@ -72,9 +75,20 @@ State.prototype.eatWater = function (man) {
   let index = this.currentGame.level.water.findIndex(l => (l.read().x == man.posX && l.read().y == man.posY));
   if (index >= 0) {
     this.currentGame.level.water.splice(index, 1);
-    console.log(this.currentGame.level.water);
     this.currentGame.level.adjustPoints(0);
   }
+}
+
+State.prototype.killPlayer = function (man) {
+  let player = this.currentGame.player;
+  if (player.posX == man.posX && player.posY == man.posY) {
+    this.changeLives(-1);
+    this.updateLivesEl(this.lives);
+  }
+}
+
+State.prototype.changeLives = function (value) {
+  this.lives += value;
 }
 
 State.prototype.changeScore = function (points) {
@@ -82,10 +96,8 @@ State.prototype.changeScore = function (points) {
 }
 
 State.prototype.clearBadGuysIntervals = function () {
-  console.log(this.currentIntervals);
   Object.values(this.currentIntervals).forEach(interval => {
     clearInterval(interval);
-    console.log(this.currentIntervals);
   });
 }
 
@@ -111,4 +123,8 @@ State.prototype.endGame = function () {
 
 State.prototype.updateScore = function (newScore) {
   this.scoreBoard.innerText = newScore;
+}
+
+State.prototype.updateLivesEl = function (newLives) {
+  this.liveBoard.innerText = newLives;
 }
