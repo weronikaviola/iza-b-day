@@ -1,10 +1,15 @@
-const AVAILABLE_LEVELS = ["level1"]
+const AVAILABLE_LEVELS = ["level1", "level2"]
 
 const levels = {
 	level1: {
-		pattern: "....................\n.  ddd d d      d  .\n. ....d.b.... . ....\n.    . .b.... .d.. .\n. .. . .    d . .. .\n.   b. . .... . .. .\n. .. . . dd   . d  .\n. .. .d... .. . d...\n.                  .\n....................",
-		maxPoints: 4,
+		pattern: "....................\n.  ddd d d      d  .\n. ....d.b.... . ....\n.    . .b.... .d.. .\n. .. . .    d . .. .\n.   b. . .... . .. .\n. .. . . dd   . d  .\n. .. .d... .. . d...\n.        p         .\n....................",
+		maxPoints: 14,
 		startText: "Welcome to the game.\nYou must collect \nall the water supplies \nbefore the evil companies \nwill do that. \nReady?"
+	},
+	level2: {
+		pattern: "....................\n.  d  b          d .\n. ....... .   .b.  .\n. . d. d.  .d.  . d.\n. . ... . b .   .d .\n.  d  d      .    d.\n. ....... .. .   . .\n. ddbd    .. ..d. ..\n. .......p   ddd   .\n....................",
+		maxPoints: 17,
+		startText: "something about music?",
 	}
 };
 
@@ -13,6 +18,7 @@ const levelChars = {
 	" ": "empty",
 	"d": "drop",
 	"b": "badMan",
+	"p": "player",
 };
 
 class Location {
@@ -46,6 +52,11 @@ class Level {
 				let type = levelChars[char];
 				if (type === "badMan") this.badGuys.push(new BadMan(x * SQUARE_SIZE, y * SQUARE_SIZE, rows));
 				if (type === "drop") this.water.push(new Location(x, y));
+				if (type === "player") {
+					this.playerX = x;
+					this.playerY = y;
+					console.log(x, y);
+				}
 				return type;
 			});
 		});
@@ -61,6 +72,5 @@ Level.prototype.adjustPoints = function (num) {
 }
 
 Level.prototype.checkIfDone = function () {
-	console.log(this.water);
 	return (this.water.length <= 0);
 }

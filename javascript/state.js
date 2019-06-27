@@ -42,11 +42,14 @@ State.prototype.initializeLevel = async function (level) {
   setTimeout(() => {
     this.currentGame.canvas.clearDisplay();
     this.currentGame.canvas.drawBackground(this.currentGame.level);
-    this.currentGame.player = new Player(5 * SQUARE_SIZE, 8 * SQUARE_SIZE, 1);
+    this.currentGame.player = new Player(this.currentGame.level.playerX * SQUARE_SIZE, this.currentGame.level.playerY * SQUARE_SIZE);
     this.currentGame.canvas.drawPlayer(this.currentGame.player);
     this.displayBadGuys();
     let that = this;
-    document.addEventListener("keydown", function (evt) { that.movePlayer(evt) });
+    this.listenForMoves = function(evt) {
+      that.movePlayer(evt);
+    }
+    document.addEventListener("keydown", this.listenForMoves);
   }, 3000);
 }
 
@@ -84,6 +87,7 @@ State.prototype.clearBadGuysIntervals = function () {
 State.prototype.nextLevel = function (points) {
   this.currentLevelIdx += 1;
   this.changeScore(points);
+  document.removeEventListener("keydown", this.listenForMoves);
   if (this.currentLevelIdx < AVAILABLE_LEVELS.length) {
     //we start indexing levels at 0
     this.clearBadGuysIntervals();

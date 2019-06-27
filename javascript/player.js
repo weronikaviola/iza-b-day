@@ -1,8 +1,7 @@
 class Player {
-	constructor(posX, posY, speed) {
+	constructor(posX, posY) {
 		this.posX = posX;
 		this.posY = posY;
-		this.speed = speed;
 	}
 
 	get type() { return "player"; }
