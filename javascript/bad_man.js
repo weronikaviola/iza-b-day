@@ -27,17 +27,18 @@ BadMan.prototype.speed = function () {
 		return 500;
 	} else if (modulo == 2) {
 		return 200;
-	} else if (modulo == 3) {
+	} else {
 		return 600;
 	}
 }
 
 BadMan.prototype.iq = function () {
-	if (this.id == 0) {
+	let modulo = this.id%3
+	if (modulo == 0) {
 		return 20;
-	} else if (this.id == 1) {
+	} else if (modulo == 1) {
 		return 10;
-	} else if (this.id == 2) {
+	} else if (modulo == 2) {
 		return 8;
 	} else {
 		return 12;
@@ -45,11 +46,12 @@ BadMan.prototype.iq = function () {
 }
 
 BadMan.prototype.icon = function () {
-	if (this.id == 0) {
+	let modulo = this.id%3
+	if (modulo == 0) {
 		return "images/bp.png";
-	} else if (this.id == 1) {
+	} else if (modulo == 1) {
 		return "images/cocacola.png";
-	} else if (this.id == 2) {
+	} else if (modulo == 2) {
 		return "images/nestle80x80.png";
 	} else {
 		return "images/danone.png";
