@@ -5,22 +5,23 @@ const levels = {
 	level1: {
 		pattern: "....................\n.  ddd d d      d  .\n. ....d. .... . ....\n.    . . .... .d.. .\n. .. . .    d . .. .\n.   b. . .... . .. .\n. .. . . dd   . d  .\n. .. .d... .. . d...\n.        p         .\n....................",
 		maxPoints: 14,
-		startText: "Welcome to the game.\nYou must collect all the water supplies \nbefore all the evil companies will do that!\nThe global catastrophy is inevideble!\n Can you save us?!"
+		startText: "Welcome to The Game.\nYou must collect all of the water supplies before the evil companies do that! \nThe global catastrophe is inevitable!\nCan you save us?!",
 	},
 	level2: {
 		pattern: "....................\n.  d  b          d .\n. ....... .   .b.  .\n. . d. d.  .d.  . d.\n. . ... .   .   .d .\n.  d  d      .    d.\n. ....... .. .   . .\n. dd d    .. ..d. ..\n. .......p   ddd   .\n....................",
 		maxPoints: 17,
-		startText: "The violas cannot play in tune because of the global warming....\nCan you help them?",
+		startText: "The violas cannot play in tune because of global warming…. \nCan you help them?",
 	},
 	level3: {
 		pattern: "....................\n..     b..  b  .....\n.   . ...   .  .p  .\n. ...  .   .   ... .\n. d b.    .        .\n. .   ....   ddddd .\n. ... ....   dddd  .\n. . . .  .   ddd   .\n.     .  .   dd    .\n....................",
 		maxPoints: 15,
-		startText: "Water pollution forces the wild horses\nto go extint!\nSave them!!!!",
+		startText: "Water pollution forces the wild horses to go extinct!\nSave them!!!!",
 	},
 	level4: {
 		pattern: "....................\n.  .   b .      .  .\n. ...    bd     d ..\n. .............dd...\n.  .............dd..\n. .............dd  .\n. ...   d       .  .\n.  .   .    d    . .\n.   p . .   b  d   .\n....................",
 		maxPoints: 11,
-		startText: "Mloda is now helping the bad companies\nShe created this evil maze to give the companies more time!\nCan you go through this trap and save us?",
+		startText:"Mloda is now helping the bad companies\nShe created this evil maze to give them more time!\nCan you go through this trap and save us?",
+
 	},
 	level5: {
 		pattern: "....................\n.p d.    ...      d.\n. .d. d.    b.d.. d.\n. .d. ...ddd...d.d..\n. ...d.........d. b.\n. dddd.. ... ..  b .\n. .   d... ...  .. .\n.  .. b ..... d. . .\n.ddd. . d... b .dd .\n....................",
