@@ -24,7 +24,7 @@ const levels = {
 
 	},
 	level5: {
-		pattern: "....................\n.p d.    ...      d.\n. .d. d.    b.d.. d.\n. .d. ...ddd...d.d..\n. ...d.........d. b.\n. dddd.. ... ..  b .\n. .   d... ...  .. .\n.  .. b ..... d. . .\n.ddd. . d... b .dd .\n....................",
+		pattern: "....................\n.p d.    ...     dd.\n. .d. d.    b.d.. d.\n. .d. ...ddd...d.d..\n. ...d.........d. b.\n. dddd.. ... ..  b .\n. .   d... ...  .. .\n.  .. b ..... d. . .\n.ddd. . d... b .dd .\n....................",
 		maxPoints: 10,
 		startText: "mloda is not giving up...\n Now she has an army of evil cats on her side!!!\nHurry!!!"
 	}
