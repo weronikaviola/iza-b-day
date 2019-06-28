@@ -5,7 +5,7 @@ class State {
     this.started = false;
     this.playerName = playerName;
     this.totalPoints = 0;
-    this.lives = 5;
+    this.lives = 7;
     this.currentGame = {};
     this.currentLevelIdx = 0;
     this.currentIntervals = {};
@@ -86,7 +86,7 @@ State.prototype.eatWater = function (man) {
 State.prototype.killPlayer = function (man) {
   let player = this.currentGame.player;
   if (player.posX == man.posX && player.posY == man.posY && !player.immortal) {
-    if (this.lives > 2) {
+    if (this.lives > 1) {
       this.changeLives(-1);
       this.updateLivesEl(this.lives);
       this.currentGame.canvas.blinkPlayer(this.currentGame.player);
@@ -129,6 +129,7 @@ State.prototype.nextLevel = function () {
 
 State.prototype.endGame = function () {
   this.clearBadGuysIntervals();
+  this.currentGame.level.water = [];
   this.currentGame.canvas.printGameOver();
 }
 
