@@ -18,7 +18,7 @@ class BadMan {
 }
 
 BadMan.prototype.speed = function () {
-	let modulo = this.id%3
+	let modulo = this.id%4
 	if (modulo == 0) {
 		return 1000;
 	} else if (modulo == 1) {
@@ -31,7 +31,7 @@ BadMan.prototype.speed = function () {
 }
 
 BadMan.prototype.iq = function () {
-	let modulo = this.id%3
+	let modulo = this.id%4
 	if (modulo == 0) {
 		return 20;
 	} else if (modulo == 1) {
@@ -44,7 +44,7 @@ BadMan.prototype.iq = function () {
 }
 
 BadMan.prototype.icon = function () {
-	let modulo = this.id%3
+	let modulo = this.id%4
 	if (modulo == 0) {
 		return "images/bp.png";
 	} else if (modulo == 1) {
