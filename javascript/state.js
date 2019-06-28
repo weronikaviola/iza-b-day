@@ -5,7 +5,7 @@ class State {
     this.started = false;
     this.playerName = playerName;
     this.totalPoints = 0;
-    this.lives = 5;
+    this.lives = 7;
     this.currentGame = {};
     this.currentLevelIdx = 0;
     this.currentIntervals = {};
