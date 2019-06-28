@@ -72,7 +72,6 @@ class Level {
 				if (type === "player") {
 					this.playerX = x;
 					this.playerY = y;
-					console.log(x, y);
 				}
 				return type;
 			});

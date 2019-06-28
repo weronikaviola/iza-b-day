@@ -5,7 +5,7 @@ class State {
     this.started = false;
     this.playerName = playerName;
     this.totalPoints = 0;
-    this.lives = 7;
+    this.lives = 5;
     this.currentGame = {};
     this.currentLevelIdx = 0;
     this.currentIntervals = {};
@@ -32,6 +32,7 @@ class State {
 
 State.prototype.initializeGame = function () {
   this.started = true;
+  this.updateLivesEl(this.lives);
   this.initializeLevel(AVAILABLE_LEVELS[this.currentLevelIdx]);
 }
 
@@ -51,8 +52,11 @@ State.prototype.initializeLevel = async function (level) {
     this.currentGame.canvas.drawPlayer(this.currentGame.player);
     this.displayBadGuys();
     let that = this;
-    this.listenForMoves = function(evt) {
+    this.listenForMoves = function (evt) {
       that.movePlayer(evt);
+      that.currentGame.badGuys.forEach((guy, idx) => {
+        that.killPlayer(guy);
+      });
     }
     document.addEventListener("keydown", this.listenForMoves);
   }, 3000);
@@ -81,9 +85,16 @@ State.prototype.eatWater = function (man) {
 
 State.prototype.killPlayer = function (man) {
   let player = this.currentGame.player;
-  if (player.posX == man.posX && player.posY == man.posY) {
-    this.changeLives(-1);
-    this.updateLivesEl(this.lives);
+  if (player.posX == man.posX && player.posY == man.posY && !player.immortal) {
+    if (this.lives > 2) {
+      this.changeLives(-1);
+      this.updateLivesEl(this.lives);
+      this.currentGame.canvas.blinkPlayer(this.currentGame.player);
+      player.resurrect();
+    } else {
+      this.updateLivesEl(0);
+      this.endGame();
+    }
   }
 }
 
@@ -118,7 +129,7 @@ State.prototype.nextLevel = function () {
 
 State.prototype.endGame = function () {
   this.clearBadGuysIntervals();
-  this.currentGame.canvas.printText(END_TEXT);
+  this.currentGame.canvas.printGameOver();
 }
 
 State.prototype.updateScore = function (newScore) {

@@ -18,8 +18,6 @@ class BadMan {
 }
 
 BadMan.prototype.speed = function () {
-	console.log(this.id);
-	console.log("modulo: ", this.id%4)
 	let modulo = this.id%4
 	if (modulo == 0) {
 		return 1000;

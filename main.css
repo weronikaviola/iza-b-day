@@ -70,4 +70,25 @@ canvas {
 	background: rgb(0, 0, 0, 0.85);
 	height:30vh;
 }
+#notifications {
+	position: absolute;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;	
+	background-color: #000000;
+	padding: 10% 25% 30% 25%;
+}
+.shadowed {
+	opacity: 0.8;
+	font-size: 300%;
+}
 
+@keyframes color-me-in {
+	0% {
+	  background: #ffffff;
+	}
+	100% {
+	  background: #000000;
+	}
+}
