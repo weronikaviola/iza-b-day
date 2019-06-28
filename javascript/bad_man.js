@@ -18,13 +18,16 @@ class BadMan {
 }
 
 BadMan.prototype.speed = function () {
-	if (this.id == 0) {
+	console.log(this.id);
+	console.log("modulo: ", this.id%4)
+	let modulo = this.id%3
+	if (modulo == 0) {
 		return 1000;
-	} else if (this.id == 1) {
+	} else if (modulo == 1) {
 		return 500;
-	} else if (this.id == 2) {
+	} else if (modulo == 2) {
 		return 200;
-	} else {
+	} else if (modulo == 3) {
 		return 600;
 	}
 }

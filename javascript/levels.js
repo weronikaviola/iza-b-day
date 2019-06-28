@@ -1,26 +1,32 @@
-const AVAILABLE_LEVELS = ["level1", "level2", "level3", "level4"]
+const AVAILABLE_LEVELS = ["level1", "level2", "level3", "level4", "level5"]
 
+//increase number of enemies with every level
 const levels = {
 	level1: {
-		pattern: "....................\n.  ddd d d      d  .\n. ....d.b.... . ....\n.    . .b.... .d.. .\n. .. . .    d . .. .\n.   b. . .... . .. .\n. .. . . dd   . d  .\n. .. .d... .. . d...\n.        p         .\n....................",
+		pattern: "....................\n.  ddd d d      d  .\n. ....d. .... . ....\n.    . . .... .d.. .\n. .. . .    d . .. .\n.   b. . .... . .. .\n. .. . . dd   . d  .\n. .. .d... .. . d...\n.        p         .\n....................",
 		maxPoints: 14,
-		startText: "Welcome to the game.\nYou must collect \nall the water supplies \nbefore the evil companies \nwill do that. \nReady?"
+		startText: "Welcome to the game.\nYou must collect all the water supplies \nbefore all the evil companies will do that!\nThe global catastrophy is inevideble!\n Can you save us?!"
 	},
 	level2: {
-		pattern: "....................\n.  d  b          d .\n. ....... .   .b.  .\n. . d. d.  .d.  . d.\n. . ... . b .   .d .\n.  d  d      .    d.\n. ....... .. .   . .\n. ddbd    .. ..d. ..\n. .......p   ddd   .\n....................",
+		pattern: "....................\n.  d  b          d .\n. ....... .   .b.  .\n. . d. d.  .d.  . d.\n. . ... .   .   .d .\n.  d  d      .    d.\n. ....... .. .   . .\n. dd d    .. ..d. ..\n. .......p   ddd   .\n....................",
 		maxPoints: 17,
-		startText: "something about music?",
+		startText: "The violas cannot play in tune because of the global warming....\nCan you help them?",
 	},
 	level3: {
-		pattern: "....................\n..      ..     .....\n.   . ...   .  .p  .\n. ...  .   .   ... .\n. d  .    .        .\n. .   ....   ddddd .\n. ... ....   dddd  .\n. . . .  .   ddd   .\n.     .  .   dd    .\n....................",
+		pattern: "....................\n..     b..  b  .....\n.   . ...   .  .p  .\n. ...  .   .   ... .\n. d b.    .        .\n. .   ....   ddddd .\n. ... ....   dddd  .\n. . . .  .   ddd   .\n.     .  .   dd    .\n....................",
 		maxPoints: 15,
-		startText: "something about horse",
+		startText: "Water pollution forces the wild horses\nto go extint!\nSave them!!!!",
 	},
 	level4: {
 		pattern: "....................\n.  .   b .      .  .\n. ...    bd     d ..\n. .............dd...\n.  .............dd..\n. .............dd  .\n. ...   d       .  .\n.  .   .    d    . .\n.   p . .   b  d   .\n....................",
 		maxPoints: 11,
-		startText: "mloda is now helping the bad companies\nCan you go through this trap that she prepared for you?",
+		startText: "Mloda is now helping the bad companies\nShe created this evil maze to give the companies more time!\nCan you go through this trap and save us?",
 	},
+	level5: {
+		pattern: "....................\n.p d.    ...      d.\n. .d. d.    b.d.. d.\n. .d. ...ddd...d.d..\n. ...d.........d. b.\n. dddd.. ... ..  b .\n. .   d... ...  .. .\n.  .. b ..... d. . .\n.ddd. . d... b .dd .\n....................",
+		maxPoints: 10,
+		startText: "mloda is not giving up...\n Now she has an army of evil cats on her side!!!\nHurry!!!"
+	}
 };
 
 const levelChars = {
@@ -54,8 +60,6 @@ class Level {
 		this.active = true;
 		this.badGuys = [];
 		this.water = [];
-
-		console.log('constructing');
 
 		this.rows = rows.map((row, y) => {
 			return row.map((char, x) => {
