@@ -1,6 +1,10 @@
 class CanvasDisplay {
 	constructor(parent, level) {
+		this.notifications = document.getElementById("notifications");
+		this.notifications.style.height = level.height * SQUARE_SIZE + "px";
+
 		this.canvas = document.createElement("canvas");
+		this.canvas.setAttribute("id", "canvas");
 		this.canvas.width = level.width * SQUARE_SIZE;
 		this.canvas.height = level.height * SQUARE_SIZE;
 		this.squareSize = this.canvas.width / level.width;
@@ -14,39 +18,29 @@ class CanvasDisplay {
 }
 
 CanvasDisplay.prototype.clearDisplay = function (status = undefined) {
-	if (status == "won") {
-		this.cx.fillStyle = "#000000";
-	} else if (status == "lost") {
-		this.cx.fillStyle = "#000000";
-		// this.cx.fillStyle = "rgb(44,136,214)";
-	} else {
-		this.cx.fillStyle = "#ffffff";
-	}
+	this.notifications.style.diplay = "none";
+	this.notifications.style.visibility = "hidden";
+	this.cx.fillStyle = "#ffffff";
 	this.cx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 }
 
 CanvasDisplay.prototype.printText = function (message) {
-	this.clearDisplay("won");
-	this.cx.font = "24px Verdana";
-	this.cx.fillStyle = "#f9ff00";
-	let text = message.split("\n");
-	text.forEach((line, idx) => {
-		this.cx.fillText(line, 10, (idx + 1) * 50);
-	});
+	this.notifications.style.diplay = "block";
+	this.notifications.style.visibility = "visible";
+	this.notifications.style.backgroundColor = "#000000";
+	this.notifications.innerHTML = message;
 }
 
 CanvasDisplay.prototype.printGameOver = function () {
-	this.clearDisplay("won");
-	this.cx.font = "50px Verdana";
-	this.cx.fillStyle = "#ffff00";
-	this.cx.textAlign = "center";
-	this.cx.fillText("GAME OVER", this.canvas.width / 2, this.canvas.height / 2);
+	this.notifications.className = "shadowed";
+	this.notifications.innerHTML = "GAME OVER";
+	this.notifications.style.diplay = "block";
+	this.notifications.style.visibility = "visible";
 }
 
 CanvasDisplay.prototype.removeCanvas = function (parent) {
 	parent.removeChild(this.canvas);
 }
-
 
 //displays
 
@@ -54,7 +48,9 @@ const wallsImg = document.createElement("img");
 wallsImg.src = "images/wall80x80.png";
 
 const playerImg = document.createElement("img");
-playerImg.src = "images/Unbenannt.png";
+playerImg.src = "images/iza_mario80x80.png";
+const deadPlayerImg = document.createElement("img");
+deadPlayerImg.src = "images/iza_mario_killed80x80.png";
 
 const dropImg = document.createElement("img");
 dropImg.src = "images/water.png";
@@ -81,8 +77,22 @@ CanvasDisplay.prototype.drawPlayer = function (player) {
 	this.cx.drawImage(playerImg, player.posX, player.posY, SQUARE_SIZE, SQUARE_SIZE);
 }
 
+CanvasDisplay.prototype.blinkPlayer = async function (player) {
+	for (i = 0; i < 5; i++) {
+		let that = this;
+		that.cx.drawImage(deadPlayerImg, player.posX, player.posY, SQUARE_SIZE, SQUARE_SIZE);
+		await sleep(150);
+		that.cx.drawImage(playerImg, player.posX, player.posY, SQUARE_SIZE, SQUARE_SIZE);
+		await sleep(150);
+	}
+}
+
 CanvasDisplay.prototype.drawBadMan = function (badMan) {
 	const badManImg = document.createElement("img");
 	badManImg.src = badMan.icon();
 	this.cx.drawImage(badManImg, badMan.posX, badMan.posY, SQUARE_SIZE, SQUARE_SIZE)
+}
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
 }

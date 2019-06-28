@@ -2,9 +2,19 @@ class Player {
 	constructor(posX, posY) {
 		this.posX = posX;
 		this.posY = posY;
+		// after players is resurrected, he becomes immortal for 1s
+		this.immortal = false;
 	}
 
 	get type() { return "player"; }
+}
+
+Player.prototype.resurrect = async function () {
+	this.immortal = true;
+	let that = this;
+	setTimeout(function () {
+		that.immortal = false;
+	}, 1500);
 }
 
 Player.prototype.move = function (direction) {
