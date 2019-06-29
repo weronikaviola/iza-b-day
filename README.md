@@ -1,14 +1,12 @@
-# Iza-b-day
-game made with HTML5 and JS6 technology
+# Iza-b-day'2019
 
-## TODO
+## Battle evil companies in the environmental struggle to save the planet's water supply
 
-- [x] add points to collect (some environmental positive things...😄)
-- [x] add obstacles (maybe logos of some companies polluting waters crawling around...)
-- [x] replace the Peach w/ something like Iza's face
-- [x] add welcome message before levels
-- [x] randomly generate "face" for the badGuy (one of many choices of bad companies etc.)
-- [x] ad "lives" for the player, pretty important, now she is immortal.... ;)
-- [x] add new levels (3?) ---> MORE!!! (maybe bonus levels with no badGuys but a timer? Too much?
-- [ ] what is the prize after she won the game?
-- [ ] poster for the game, maybe video advertising it? 💩
+little birthday gift made with JS6+/CSS/HTML
+
+[play here](https://weronikaviola.github.io/iza-b-day/)
+
+*****
+
+![photo](https://i.imgur.com/VooJVvn.png)
+![photo](https://i.imgur.com/2Em5owJ.png)
